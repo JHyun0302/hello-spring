@@ -1,3 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org"> <body>
-<p th:text="'hello ' + ${name}">hello! empty</p> </body>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'hello ' + ${name}">hello! empty</p>
+<!--"hello! empty"은 파일 위치를 절대경로로 web에 입력시 뜨게 됨(서버없이 html만들어서 볼 때 사용)-->
+<!--서버 이용시 "hello! empty" 안 뜸-->
+</body>
 </html>

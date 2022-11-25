@@ -1,13 +1,20 @@
 package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
-
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+/**
+ * 구현체: 가벼운 메모리 기반의 데이터 저장소
+ */
+//@Repository
 public class MemoryMemberRepository implements MemberRepository { // Implements: Alt + Enter
+    /**
+     * Map<id, name>
+     */
     private static Map<Long, Member> store =new HashMap<>(); // Import: Alt + Enter
-    private static long sequence = 0L;
+    private static long sequence = 0L; // 0,1,2... key값 생성
 
 
     @Override
@@ -24,6 +31,9 @@ public class MemoryMemberRepository implements MemberRepository { // Implements:
 
     @Override
     public Optional<Member> findByName(String name) {
+        /**
+         * lambda:
+         */
         return store.values().stream()
                 .filter(member -> member.getName().equals(name)) // getName()의 name과 parameter의 name이 같은지 비교 -> 같으면 반환
                 .findAny(); // 끝까지 찾는데 없으면 Optional 감싸서 반환
@@ -36,5 +46,5 @@ public class MemoryMemberRepository implements MemberRepository { // Implements:
 
     public void clearStore(){
         store.clear();
-    } // test끝날 때마다 store.clear
+    } // test끝날 때마다 store.clear();
 }

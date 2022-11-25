@@ -2,7 +2,7 @@ package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterEach; // Ctrl + Alt + O
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,7 +14,7 @@ class MemoryMemberRepositoryTest { // create class: Alt + insert
     MemoryMemberRepository repository = new MemoryMemberRepository();
 
     @AfterEach // 테스트는 서로 의존관계없이 설계되어야함!
-    public void afterEach(){ // save() 테스트하고 afterEach() 돌고 findByName() 테스트하고 afterEach() 도는 방식
+    public void afterEach(){ // save() 테스트하고 afterEach() 돌고 findByName() 테스트하고 afterEach() 테스트하고 findAll()테스트 하는 방식
         repository.clearStore();
     }
     @Test
