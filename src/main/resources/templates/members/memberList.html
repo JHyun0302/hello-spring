@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="container">
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>이름</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="member : ${members}">
+        <!--each: loop돌림-->
+        <td th:text="${member.id}"></td>
+        <!--member.java의 getId().에서 id 불러옴-->
+        <td th:text="${member.name}"></td>
+        <!--member.java의 getName().에서 name 불러옴-->
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div> <!-- /container -->
+</body>
+</html>
