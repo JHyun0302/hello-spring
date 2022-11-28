@@ -13,11 +13,10 @@ public class JdbcMemberRepository implements MemberRepository{
 
     private final DataSource dataSource;
 
-    public JdbcMemberRepository(DataSource dataSource) throws SQLException {
+    public JdbcMemberRepository(DataSource dataSource) { //constructor injection
         this.dataSource = dataSource; //spring을 통해 dataSource 주입받기
-        dataSource.getConnection();
         /**
-         * dataSource.getConnection();을 통해 진짜 db랑 연결하는 소켓을 얻음
+         * dataSource.getConnection(); // 진짜 db랑 연결하는 소켓을 얻음
          * sql문 날려서 db에 저장하면 됨
          */
     }
@@ -27,18 +26,19 @@ public class JdbcMemberRepository implements MemberRepository{
         String sql = "insert into member(name) values(?)";
 /**
  * Pseudocode
-        Connection conn = dataSource.getConnection(); // dataSource Connection을 가져옴
+        Connection conn = dataSource.getConnection(); // constructor의 dataSource를 가져옴
 
         conn.prepareStatement(sql); //sql문 작성
 
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt, setString(1, member.getName());
+        pstmt.setString(1, member.getName()); //parameter의 member 이름 set
 
         pstmt.executeUpdate(); //db에 qurry가 날라감
  */
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null; //결과 받기
+        ResultSet rs = null;
+
         try {
             conn = getConnection(); //connection 가져옴
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // prepareStatement을 통해 sql문 넣음
