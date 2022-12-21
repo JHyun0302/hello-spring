@@ -12,7 +12,6 @@ import java.util.List;
 
 @Controller
 public class MemberController {
-
     private final MemberService memberService;
 
     /**
@@ -37,16 +36,19 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/members/new") //url창에 Enter (조회할 때 사용)
-    public String createForm(){
-        return "members/createMemberForm"; // resources/ templates에서 createMemberForm.html 찾음
+    @GetMapping("/members/new") // http://localhost:8080/members/new
+    public String createForm() {
+        return "members/createMemberForm"; // resources/templates/members/createMemberForm.html
     }
 
-    @PostMapping("/members/new") // .html의 form에 데이터를 넘겨서 받을 때 @PostMapping 사용
-    public String create(MemberForm form){ // createMemberForm.html의 input에서 넘어온 name을 MemberForm의 name에 저장
+    /**
+     * @GetMapping: url창에 직접 입력할 때 사용
+     * @PostMapping: .html에서 데이터를 전달 받을 때 사용
+     */
+    @PostMapping("/members/new")
+    public String create(MemberForm form) { // createMemberForm.html의 input에서 넘어온 name을 MemberForm의 name에 저장
         Member member = new Member();
         member.setName(form.getName()); // form.getName()된 name을 =MemberForm의 private String name;에 넣어줌
-
         /*System.out.println("member= " +member.getName());*/
 
         memberService.join(member);
@@ -55,12 +57,10 @@ public class MemberController {
     }
 
     @GetMapping("/members")
-    /**
-     * Model 객체: Controller에서 생성한 데이터를 담아서 View로 전달할 때 사용하는 객체, map구조로 저장됨(key:value)
-     */
-    public String list(Model model){
+    public String list(Model model) {
         List<Member> members = memberService.findMembers();
-        model.addAttribute("members", members); // members List 전체를 model에 담아서 화면 출력
+        model.addAttribute("members", members);
+        // members List 전체를 model에 담아서 html에 출력
         return "members/memberList";
     }
 }
