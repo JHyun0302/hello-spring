@@ -1,6 +1,7 @@
 package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
@@ -8,7 +9,7 @@ import java.util.*;
  * 구현체: 가벼운 메모리 기반의 데이터 저장소
  */
 
-
+@Repository //스프링이 자바코드를 인식함
 public class MemoryMemberRepository implements MemberRepository { // Implements: Alt + Enter
     /**
      * Map<id, name>
