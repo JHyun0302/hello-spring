@@ -24,7 +24,7 @@ public class SpringConfig {
 
     @Bean //@Configuration 보고 @Bean을 스프링 빈에 등록시킴
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository()); // memberService는 memberRepository가 필요!(파라미터)
     }
 
     @Bean
