@@ -2,6 +2,6 @@
 <body>
 <p th:text="'hello ' + ${name}">hello! empty</p>
 <!--"hello! empty"은 파일 위치를 절대경로로 web에 입력시 뜨게 됨(서버없이 html만들어서 볼 때 사용)-->
-<!--서버 이용시 "hello! empty" 안 뜸-->
+<!--서버 이용시 "hello! empty" 안 뜨고 ${name}이 사용자 입력값으로 치환되어서 "hello 입력값" 뜸-->
 </body>
 </html>
