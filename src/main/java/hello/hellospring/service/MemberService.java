@@ -2,10 +2,7 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +22,18 @@ public class MemberService {
 /*    public static void main(String[] args) {
         MemberService memberService = new MemberService(); // new한 경우 @Autowired는 작동하지 않음.
     }*/
+
     /**
      * 회원 가입
      */
-    public Long join(Member member){
+    public Long join(Member member) {
         //같은 이름이 있는 중복 회원x
-       /*Optional<Member> result = memberRepository.findByName(member.getName());
-        //result.orElseGet()   //값이 있으면 꺼내고 값이 없으면 orElseGet() 메서드 실행
-        result.ifPresent(m->{             // ifPiresent: 어떤 값이 있으면 Illegal~ 작동함
+       /*Optional<Member> result = memberRepository.findByName(member.getName()); // command + option + V
+    방법1:    result.orElseGet()   //값이 있으면 꺼내고 값이 없으면 orElseGet() 메서드의 default값 꺼냄
+    방법2:    result.ifPresent(m->{             // ifPiresent: 어떤 값이 있으면 Illegal~ 작동함
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });*/
-        ValidateDuplicateMember(member); // 중복회원 검증  //Refactor This: Ctrl + Shift + Alt + T
+        ValidateDuplicateMember(member); //Refactor This: Ctrl + T
         memberRepository.save(member);
         return member.getId();
     }
@@ -45,17 +43,19 @@ public class MemberService {
      */
     private void ValidateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
-            .ifPresent(m->{ // ifPiresent: Optional 객체가 값을 가지고 있으면 true => Illegal~ 작동함
-                throw new IllegalStateException("이미 존재하는 회원입니다.");
-            });
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
     }
 
-    // 전체 회원 조회
-    public List<Member> findMembers(){
+    /**
+     * 전체 회원 조회
+     */
+    public List<Member> findMembers() {
         return memberRepository.findAll();
     }
 
-    public Optional<Member> findOne(Long memberId){
+    public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
     }
 }
