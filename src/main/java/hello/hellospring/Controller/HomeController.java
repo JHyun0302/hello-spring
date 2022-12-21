@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/") //localhost:8080에 들어가면 @GetMapping 실행됨
-    public String home(){
+    @GetMapping("/") //localhost:8080에 들어갔을 때 초기화면
+    public String home() {
         return "home";
     }
 
