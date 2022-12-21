@@ -10,11 +10,12 @@ import java.util.Optional;
 /**
  * test만들기: Ctrl + Shift + T
  */
-//@Service //스프링이 올라올 때 MemberService class를 스프링 컨테이너에 연결시켜줌
+//@Service //스프링이 MemberService class를 스프링 컨테이너에 연결시켜줌
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    @Autowired //  springConfig에서 @Bean을 모두 주석처리 시키고 실행시 스프링이 Memberservice 객체를 관리하지 않으므로 에러남
+    @Autowired // memberService는 memberRepository가 필요!(파라미터)
+    //  springConfig에서 @Bean을 모두 주석처리 시키고 실행시 스프링이 Memberservice 객체를 관리하지 않으므로 에러남
     public MemberService(MemberRepository memberRepository) { //constructor
         this.memberRepository = memberRepository;
     }
