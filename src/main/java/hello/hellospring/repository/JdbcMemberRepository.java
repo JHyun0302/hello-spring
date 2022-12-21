@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class JdbcMemberRepository implements MemberRepository{
+public class JdbcMemberRepository implements MemberRepository {
 
-    private final DataSource dataSource;
+    private final DataSource dataSource; //DB에 붙을려면 DataSource 필요
 
     public JdbcMemberRepository(DataSource dataSource) { //constructor injection
         this.dataSource = dataSource; //spring을 통해 dataSource 주입받기
@@ -26,14 +26,14 @@ public class JdbcMemberRepository implements MemberRepository{
         String sql = "insert into member(name) values(?)";
 /**
  * Pseudocode
-        Connection conn = dataSource.getConnection(); // constructor의 dataSource를 가져옴
+ Connection conn = dataSource.getConnection(); // constructor의 dataSource를 가져옴
 
-        conn.prepareStatement(sql); //sql문 작성
+ conn.prepareStatement(sql); //sql문 작성
 
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, member.getName()); //parameter의 member 이름 set
+ PreparedStatement pstmt = conn.prepareStatement(sql);
+ pstmt.setString(1, member.getName()); //parameter의 member 이름 set
 
-        pstmt.executeUpdate(); //db에 qurry가 날라감
+ pstmt.executeUpdate(); //db에 qurry가 날라감
  */
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -44,9 +44,9 @@ public class JdbcMemberRepository implements MemberRepository{
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // prepareStatement을 통해 sql문 넣음
             //RETURN_GENERATED_KEYS: DB상에 AUTO_INCREMENT로 인해 자동으로 생성되어진 key(=id)를 가져오는 쿼리
 
-            pstmt.setString(1, member.getName()); // 1: ? 내용을 member.getName()으로 값 set
+            pstmt.setString(1, member.getName()); // values(?)에 member.getName()으로 값 넣음
 
-            pstmt.executeUpdate(); //db에 실제 쿼리가 날라감
+            pstmt.executeUpdate(); //db에 실제 쿼리(insert into member(name) values(?)) 날라감
             rs = pstmt.getGeneratedKeys();
             //RETURN_GENERATED_KEYS에 들어간 key값에 따라 값을 꺼내서 rs에 저장시킴
 
@@ -81,7 +81,7 @@ public class JdbcMemberRepository implements MemberRepository{
 
             rs = pstmt.executeQuery(); //조회할때는 executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 Member member = new Member();
                 member.setId(rs.getLong("id"));
                 member.setName(rs.getString("name"));
@@ -95,6 +95,7 @@ public class JdbcMemberRepository implements MemberRepository{
             close(conn, pstmt, rs);
         }
     }
+
     /**
      * 모두 조회
      */
@@ -113,7 +114,7 @@ public class JdbcMemberRepository implements MemberRepository{
             rs = pstmt.executeQuery();
 
             List<Member> members = new ArrayList<>();
-            while(rs.next()) {
+            while (rs.next()) {
                 Member member = new Member();
                 member.setId(rs.getLong("id"));
                 member.setName(rs.getString("name"));
@@ -142,7 +143,7 @@ public class JdbcMemberRepository implements MemberRepository{
 
             rs = pstmt.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 Member member = new Member();
                 member.setId(rs.getLong("id"));
                 member.setName(rs.getString("name"));
@@ -155,6 +156,7 @@ public class JdbcMemberRepository implements MemberRepository{
             close(conn, pstmt, rs);
         }
     }
+
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
@@ -183,6 +185,7 @@ public class JdbcMemberRepository implements MemberRepository{
             e.printStackTrace();
         }
     }
+
     private void close(Connection conn) throws SQLException {
         DataSourceUtils.releaseConnection(conn, dataSource);
     }
