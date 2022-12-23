@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface SpringDataJpaMemberRepository extends JpaRepository<Member, Long>, MemberRepository {
     /**
      * JpaRepository가 SpringDataJpaMemberRepository 가지고 있으면 자동으로 구현체 만들고 Spring Bean에 등록시켜줌
+     * MemoryMemberReppository에서 @Repository 없애기 - Component Scan 때문에 2번 Bean함
      */
     @Override
     Optional<Member> findByName(String name); //JPQL: select m from Member m where m.name = ?
