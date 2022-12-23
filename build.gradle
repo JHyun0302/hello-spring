@@ -15,9 +15,12 @@ repositories {
 dependencies { //library
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc' // java랑 db랑 연동할려면 starter-jdbc 필수
+    //implementation 'org.springframework.boot:spring-boot-starter-jdbc' // java랑 db랑 연동할려면 starter-jdbc 필수
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // jpa 사용시
     runtimeOnly 'com.h2database:h2' // db에 내용 넣을려면 db가 제공하는 client 필요
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
 }
 
 tasks.named('test') {
