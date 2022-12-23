@@ -3,6 +3,7 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
  * test만들기: Ctrl + Shift + T
  */
 //@Service //스프링이 MemberService class를 스프링 컨테이너에 연결시켜줌
+@Transactional //데이터 저장하고 수정할때 필요
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -34,6 +36,7 @@ public class MemberService {
     방법2:    result.ifPresent(m->{             // ifPiresent: 어떤 값이 있으면 Illegal~ 작동함
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });*/
+        
         ValidateDuplicateMember(member); //Refactor This: Ctrl + T
         memberRepository.save(member);
         return member.getId();
