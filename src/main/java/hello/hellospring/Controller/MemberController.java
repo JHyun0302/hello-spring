@@ -34,6 +34,7 @@ public class MemberController {
     @Autowired //constructor의 매개변수(memberService)와 스프링 컨테이너에 저장된 memberService를 서로 연결시켜줌
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        System.out.println("memberService = " + memberService.getClass()); //$$EnhancerBySpringCGLIB -> 프록시 생성 확인
     }
 
     @GetMapping("/members/new") // http://localhost:8080/members/new
